@@ -4,6 +4,7 @@ defmodule BudgieWeb.BudgetListLive do
   @impl true
   def mount(_params, _session, socket) do
     budgets = Budgie.Tracking.list_budgets()
+      |> Budgie.Repo.preload(:creator)
 
     socket = assign(socket, budgets: budgets)
 
@@ -23,7 +24,7 @@ defmodule BudgieWeb.BudgetListLive do
           <:col label="Name" :let={budget}>{budget.name}</:col>
           <:col label="Description" :let={budget}>{budget.description}</:col>
           <:col label="Start Date" :let={budget}>{budget.start_date}</:col>
-          <:col label="Creator ID" :let={budget}>{budget.creator_id}</:col>
+          <:col label="Creator ID" :let={budget}>{budget.creator.name}</:col>
         </.table>
       </div>
     </Layouts.app>
