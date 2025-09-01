@@ -57,5 +57,46 @@ defmodule Budgie.TrackingTest do
       assert %{end_date: ["must be after start date"]} = errors_on(changeset)
       dbg(changeset)
     end
+
+    test "list_budgets/0 show created budgets" do
+      user = Budgie.AccountsFixtures.user_fixture()
+
+      valid_attrs = %{
+        name: "Some Budget",
+        description: "Some description",
+        start_date: ~D[2025-01-01],
+        end_date: ~D[2025-12-31],
+        creator_id: user.id
+      }
+
+      assert {:ok, %Budget{} = budget} = Tracking.create_budget(valid_attrs)
+      assert {:ok, %{}} = Tracking.create_budget(valid_attrs)
+
+      budgets = Tracking.list_budgets()
+
+      assert length(budgets) == 2
+
+      assert budgets
+             |> Enum.any?(fn b -> b.id != budget.id end)
+
+      dbg(budgets)
+    end
+
+    test "get_budget/1 returns the budget with given id" do
+      user = Budgie.AccountsFixtures.user_fixture()
+
+      valid_attrs = %{
+        name: "Some Budget",
+        description: "Some description",
+        start_date: ~D[2025-01-01],
+        end_date: ~D[2025-12-31],
+        creator_id: user.id
+      }
+
+      assert {:ok, %Budget{} = budget} = Tracking.create_budget(valid_attrs)
+
+      assert %Budget{} = fetched_budget = Tracking.get_budget(budget.id)
+      assert fetched_budget.id == budget.id
+    end
   end
 end
