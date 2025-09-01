@@ -32,6 +32,18 @@ defmodule Budgie.Accounts.User do
     |> validate_email(opts)
   end
 
+  def name_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:name])
+    |> validate_name(opts)
+  end
+
+  defp validate_name(changeset, _opts) do
+    changeset
+    |> validate_required([:name])
+    |> validate_length(:name, min: 2, max: 100)
+  end
+
   defp validate_email(changeset, opts) do
     changeset =
       changeset

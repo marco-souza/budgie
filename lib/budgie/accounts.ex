@@ -76,6 +76,7 @@ defmodule Budgie.Accounts do
   """
   def register_user(attrs) do
     %User{}
+    |> User.name_changeset(attrs)
     |> User.email_changeset(attrs)
     |> Repo.insert()
   end
@@ -109,6 +110,21 @@ defmodule Budgie.Accounts do
   """
   def change_user_email(user, attrs \\ %{}, opts \\ []) do
     User.email_changeset(user, attrs, opts)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for changing the user name.
+
+  See `Budgie.Accounts.User.name_changeset/3` for a list of supported options.
+
+  ## Examples
+
+      iex> change_user_name(user)
+      %Ecto.Changeset{data: %User{}}
+
+  """
+  def change_user_name(user, attrs \\ %{}, opts \\ []) do
+    User.name_changeset(user, attrs, opts)
   end
 
   @doc """

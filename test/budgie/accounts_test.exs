@@ -106,6 +106,13 @@ defmodule Budgie.AccountsTest do
     end
   end
 
+  describe "change_user_name/3" do
+    test "returns a user changeset" do
+      assert %Ecto.Changeset{} = changeset = Accounts.change_user_name(%User{})
+      assert changeset.required == [:name]
+    end
+  end
+
   describe "change_user_email/3" do
     test "returns a user changeset" do
       assert %Ecto.Changeset{} = changeset = Accounts.change_user_email(%User{})
