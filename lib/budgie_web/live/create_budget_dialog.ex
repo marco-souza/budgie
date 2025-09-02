@@ -18,4 +18,17 @@ defmodule BudgieWeb.CreateBudgetDialog do
 
     {:ok, socket}
   end
+
+  @impl true
+  def handle_event("validate", %{"budget" => params}, socket) do
+    changeset =
+      Tracking.change_budget(%Budget{}, params)
+      |> Map.put(:action, :validate)
+
+    socket =
+      socket
+      |> assign(form: to_form(changeset))
+
+    {:noreply, socket}
+  end
 end
