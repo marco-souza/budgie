@@ -39,7 +39,7 @@ defmodule Budgie.TrackingTest do
       assert changeset.valid? == false
       assert %{end_date: ["must be after start date"]} = errors_on(changeset)
 
-      dbg(changeset)
+      # dbg(changeset)
     end
 
     test "list_budgets/0 show created budgets" do
@@ -56,7 +56,7 @@ defmodule Budgie.TrackingTest do
       assert budgets
              |> Enum.any?(fn b -> b.id != budget.id end)
 
-      dbg(budgets)
+      # dbg(budgets)
     end
 
     test "get_budget/1 returns the budget with given id" do
