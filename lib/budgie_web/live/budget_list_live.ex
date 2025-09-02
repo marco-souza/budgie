@@ -20,16 +20,14 @@ defmodule BudgieWeb.BudgetListLive do
         :if={@live_action == :new}
         id="create-budget-modal"
         on_cancel={JS.navigate(~p"/budgets", replace: true)}
-        on_confirm={JS.navigate(~p"/budgets")}
       >
         <span class="text-lg font-bold">Create Budget</span>
 
-      <.live_component
-        module={BudgieWeb.CreateBudgetDialog}
-        id="create-budget"
-        current_user={@current_scope.user}
-      />
-
+        <.live_component
+          module={BudgieWeb.CreateBudgetDialog}
+          id="create-budget"
+          current_user={@current_scope.user}
+        />
       </.modal>
 
       <div class="mx-auto max-w-3xl py-6">
@@ -63,7 +61,6 @@ defmodule BudgieWeb.BudgetListLive do
   attr :id, :string, required: true
   slot :inner_block, required: true
   attr :on_cancel, JS, default: %JS{}
-  attr :on_confirm, JS, default: %JS{}
 
   def modal(assigns) do
     ~H"""
@@ -93,11 +90,6 @@ defmodule BudgieWeb.BudgetListLive do
         </.button>
 
         {render_slot(@inner_block)}
-
-        <div class="flex justify-end gap-2 mt-8">
-          <.button phx-click={@on_cancel}>Cancel</.button>
-          <.button phx-click={@on_confirm} variant="primary">Confirm</.button>
-        </div>
       </.focus_wrap>
     </dialog>
     """
