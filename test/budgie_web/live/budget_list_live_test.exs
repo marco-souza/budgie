@@ -16,7 +16,7 @@ defmodule BudgieWeb.BudgetListLiveTest do
       budget = budgie_fixture(%{creator_id: user.id})
 
       conn = log_in_user(conn, user)
-      {:ok, lv, html} = live(conn, ~p"/budgets")
+      {:ok, _lv, html} = live(conn, ~p"/budgets")
 
       # open_browser(lv)
 
