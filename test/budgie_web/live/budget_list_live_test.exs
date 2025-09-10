@@ -50,9 +50,9 @@ defmodule BudgieWeb.BudgetListLiveTest do
           }
         })
 
-      {:safe, output} = html_escape("can't be blank")
-
-      assert html =~ "#{output}"
+      assert html =~ "can't be blank"
+          |> html_escape()
+          |> safe_to_string()
     end
   end
 end
